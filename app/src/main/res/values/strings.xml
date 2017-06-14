@@ -7,4 +7,5 @@
     <string name="password">password</string>
     <string name="login">log in</string>
     <string name="sign_up">sign up</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>
