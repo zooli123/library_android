@@ -1,9 +1,10 @@
 package com.example.szaboz.sonrisalibrary;
 
+import android.app.FragmentTransaction;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
-public class LoginActivity extends FragmentActivity {
+public class LoginActivity extends FragmentActivity implements LoginFragment.ClickedOnSignUpListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -14,14 +15,17 @@ public class LoginActivity extends FragmentActivity {
                 return;
             }
             LoginFragment loginFragment = new LoginFragment();
-            loginFragment.setArguments(getIntent().getExtras());
-
-            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, loginFragment).commit();
+            getFragmentManager().beginTransaction().add(R.id.fragment_container, loginFragment).commit();
         }
-
-
     }
 
 
-
+    @Override
+    public void onSignUpPressed() {
+        SignUpFragment signUpFragment = new SignUpFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, signUpFragment);
+        transaction.addToBackStack(signUpFragment.toString());
+        transaction.commit();
+    }
 }
