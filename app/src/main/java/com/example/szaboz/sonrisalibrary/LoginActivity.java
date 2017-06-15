@@ -4,7 +4,7 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-public class LoginActivity extends AppCompatActivity implements LoginFragment.ClickedOnSignUpListener {
+public class LoginActivity extends AppCompatActivity implements LoginFragment.LoginPageListeners {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -14,7 +14,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Cl
             if (savedInstanceState != null){
                 return;
             }
-            LoginFragment loginFragment = new LoginFragment();
+            LoginFragment loginFragment = LoginFragment.newInstance();
             getFragmentManager().beginTransaction().add(R.id.fragment_container, loginFragment).commit();
         }
     }
@@ -28,4 +28,9 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Cl
         transaction.addToBackStack(signUpFragment.toString());
         transaction.commit();
     }
+
+    public void onLoginPressed() {
+        //TODO:login
+    }
+
 }

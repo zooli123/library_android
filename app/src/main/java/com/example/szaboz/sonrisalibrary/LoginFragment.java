@@ -1,6 +1,5 @@
 package com.example.szaboz.sonrisalibrary;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -14,23 +13,27 @@ public class LoginFragment extends Fragment {
         return new LoginFragment();
     }
 
-    ClickedOnSignUpListener signupListener;
-    public interface ClickedOnSignUpListener {
+    LoginPageListeners loginPageListener;
+    public interface LoginPageListeners {
         void onSignUpPressed();
+        void onLoginPressed();
     }
 
     public void handleSignUpClick(){
-        signupListener.onSignUpPressed();
+        loginPageListener.onSignUpPressed();
+    }
+    public void handleLoginClick(){
+        loginPageListener.onLoginPressed();
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            signupListener = (ClickedOnSignUpListener) context;
+            loginPageListener = (LoginPageListeners) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
-                    + " must implement ClickedOnSignUpListener");
+                    + " must implement LoginPageListeners");
         }
     }
 
@@ -43,6 +46,14 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 handleSignUpClick();
+            }
+        });
+
+        Button loginBtn = (Button) view.findViewById(R.id.btn_login);
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleLoginClick();
             }
         });
         return view;
