@@ -1,4 +1,4 @@
-package com.example.szaboz.sonrisalibrary;
+package com.example.szaboz.sonrisalibrary.fragment;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -7,6 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.example.szaboz.sonrisalibrary.R;
+import com.example.szaboz.sonrisalibrary.activity.LoginActivity;
+import com.example.szaboz.sonrisalibrary.activity.MainActivity;
 
 public class LoginFragment extends Fragment {
     public static LoginFragment newInstance() {
@@ -18,6 +22,7 @@ public class LoginFragment extends Fragment {
         void onSignUpPressed();
         void onLoginPressed();
     }
+
 
     public void handleSignUpClick(){
         loginPageListener.onSignUpPressed();

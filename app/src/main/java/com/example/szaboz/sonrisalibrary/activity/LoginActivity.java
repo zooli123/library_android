@@ -1,8 +1,13 @@
-package com.example.szaboz.sonrisalibrary;
+package com.example.szaboz.sonrisalibrary.activity;
 
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.example.szaboz.sonrisalibrary.fragment.LoginFragment;
+import com.example.szaboz.sonrisalibrary.R;
+import com.example.szaboz.sonrisalibrary.fragment.SignUpFragment;
 
 public class LoginActivity extends AppCompatActivity implements LoginFragment.LoginPageListeners {
     @Override
@@ -22,15 +27,17 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Lo
 
     @Override
     public void onSignUpPressed() {
-        SignUpFragment signUpFragment = new SignUpFragment();
+        SignUpFragment signUpFragment = SignUpFragment.newInstance();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, signUpFragment);
         transaction.addToBackStack(signUpFragment.toString());
         transaction.commit();
     }
 
+    @Override
     public void onLoginPressed() {
-        //TODO:login
+        Intent menuIntent = new Intent(this, MainActivity.class);
+        startActivity(menuIntent);
     }
 
 }
