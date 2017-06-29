@@ -15,12 +15,12 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Lo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        if (findViewById(R.id.fragment_container) != null){
+        if (findViewById(R.id.fragment_container_login) != null){
             if (savedInstanceState != null){
                 return;
             }
             LoginFragment loginFragment = LoginFragment.newInstance();
-            getFragmentManager().beginTransaction().add(R.id.fragment_container, loginFragment).commit();
+            getFragmentManager().beginTransaction().add(R.id.fragment_container_login, loginFragment).commit();
         }
     }
 
@@ -29,15 +29,15 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Lo
     public void onSignUpPressed() {
         SignUpFragment signUpFragment = SignUpFragment.newInstance();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, signUpFragment);
+        transaction.replace(R.id.fragment_container_login, signUpFragment);
         transaction.addToBackStack(signUpFragment.toString());
         transaction.commit();
     }
 
     @Override
     public void onLoginPressed() {
-        Intent menuIntent = new Intent(this, MainActivity.class);
-        startActivity(menuIntent);
+        Intent mainIntent = new Intent(this, MainActivity.class);
+        startActivity(mainIntent);
     }
 
 }
