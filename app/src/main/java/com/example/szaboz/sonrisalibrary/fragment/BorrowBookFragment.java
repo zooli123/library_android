@@ -11,6 +11,7 @@ import android.widget.ListView;
 import com.example.szaboz.sonrisalibrary.R;
 import com.example.szaboz.sonrisalibrary.adapter.BookAdapter;
 import com.example.szaboz.sonrisalibrary.bean.Book;
+import com.example.szaboz.sonrisalibrary.factory.DemoBooksFactory;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -61,6 +62,7 @@ public class BorrowBookFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        getActivity().setTitle(R.string.borrow_books);
 
     }
 
@@ -69,18 +71,10 @@ public class BorrowBookFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_borrow_book, container, false);
-        listView = (ListView) view.findViewById(R.id.managed_books_list);
-        ArrayList<Book>  demoBooksData = new ArrayList<>();
-        demoBooksData.add(new Book("A dzsungel könyve", "Szabó Zoltán", new Date()));
-        demoBooksData.add(new Book("A rémségek cirkusza", "Szabó Zoltán", new Date()));
-        demoBooksData.add(new Book("Thinking in Java"));
-        demoBooksData.add(new Book("Clean code"));
-        demoBooksData.add(new Book("A gyűrűk ura:A Gyűrű Szövetége", "Szabó Zoltán", new Date()));
-        demoBooksData.add(new Book("Galaxis utikalauz stopposoknak", "Szabó Zoltán János", new Date(117,01,01) ));
-        demoBooksData.add(new Book("C++"));
-        demoBooksData.add(new Book("PHP 5"));
+        listView = (ListView) view.findViewById(R.id.borrow_books_listView);
+        DemoBooksFactory booksFactory = new DemoBooksFactory();
 
-        BookAdapter bookAdapter = new BookAdapter(getActivity(), inflater, demoBooksData);
+        BookAdapter bookAdapter = new BookAdapter(getActivity(), inflater, booksFactory.getDemoBooksData());
         listView.setAdapter(bookAdapter);
         return view;
     }
