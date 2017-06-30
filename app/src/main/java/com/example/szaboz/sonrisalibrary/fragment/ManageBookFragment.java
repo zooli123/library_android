@@ -1,14 +1,22 @@
 package com.example.szaboz.sonrisalibrary.fragment;
 
-import android.content.Context;
+import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.example.szaboz.sonrisalibrary.R;
+import com.example.szaboz.sonrisalibrary.adapter.BookAdapter;
+import com.example.szaboz.sonrisalibrary.bean.Book;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class ManageBookFragment extends Fragment {
     public static ManageBookFragment newInstance() {
@@ -23,6 +31,7 @@ public class ManageBookFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private ListView listView;
 
     private OnFragmentInteractionListener mListener;
 
@@ -55,13 +64,28 @@ public class ManageBookFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_manage_book, container, false);
+        View view = inflater.inflate(R.layout.fragment_manage_book, container, false);
+        listView = (ListView) view.findViewById(R.id.managed_books_list);
+        ArrayList<Book>  demoBooksData = new ArrayList<>();
+        demoBooksData.add(new Book("A dzsungel könyve", "Szabó Zoltán", new Date()));
+        demoBooksData.add(new Book("A rémségek cirkusza", "Szabó Zoltán", new Date()));
+        demoBooksData.add(new Book("Thinking in Java"));
+        demoBooksData.add(new Book("Clean code"));
+        demoBooksData.add(new Book("A gyűrűk ura:A Gyűrű Szövetége", "Szabó Zoltán", new Date()));
+        demoBooksData.add(new Book("Galaxis utikalauz stopposoknak", "Szabó Zoltán János", new Date(117,01,01) ));
+        demoBooksData.add(new Book("C++"));
+        demoBooksData.add(new Book("PHP 5"));
+
+        BookAdapter bookAdapter = new BookAdapter(getActivity(), inflater, demoBooksData);
+        listView.setAdapter(bookAdapter);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
