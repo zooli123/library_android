@@ -34,7 +34,7 @@ public class BookAdapter extends ArrayAdapter<Book> {
 
         BookAdapter.ViewHolder holder;
         if (convertView == null) {
-            convertView=inflater.inflate(R.layout.managed_books_list, null, true);
+            convertView=inflater.inflate(R.layout.borrow_books_list, null, true);
             TextView bookTitle = (TextView) convertView.findViewById(R.id.book_title);
             TextView bookBorrower = (TextView) convertView.findViewById(R.id.book_borrower);
             TextView bookBorrowDate = (TextView) convertView.findViewById(R.id.book_borrow_date);

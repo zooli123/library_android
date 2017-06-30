@@ -6,21 +6,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.szaboz.sonrisalibrary.R;
 import com.example.szaboz.sonrisalibrary.adapter.BookAdapter;
 import com.example.szaboz.sonrisalibrary.bean.Book;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-public class ManageBookFragment extends Fragment {
-    public static ManageBookFragment newInstance() {
-        return new ManageBookFragment();
+public class BorrowBookFragment extends Fragment {
+    public static BorrowBookFragment newInstance() {
+        return new BorrowBookFragment();
     }
 
     // TODO: Rename parameter arguments, choose names that match
@@ -35,7 +32,7 @@ public class ManageBookFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public ManageBookFragment() {
+    public BorrowBookFragment() {
         // Required empty public constructor
     }
 
@@ -45,11 +42,11 @@ public class ManageBookFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ManageBookFragment.
+     * @return A new instance of fragment BorrowBookFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ManageBookFragment newInstance(String param1, String param2) {
-        ManageBookFragment fragment = new ManageBookFragment();
+    public static BorrowBookFragment newInstance(String param1, String param2) {
+        BorrowBookFragment fragment = new BorrowBookFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -71,7 +68,7 @@ public class ManageBookFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_manage_book, container, false);
+        View view = inflater.inflate(R.layout.fragment_borrow_book, container, false);
         listView = (ListView) view.findViewById(R.id.managed_books_list);
         ArrayList<Book>  demoBooksData = new ArrayList<>();
         demoBooksData.add(new Book("A dzsungel könyve", "Szabó Zoltán", new Date()));

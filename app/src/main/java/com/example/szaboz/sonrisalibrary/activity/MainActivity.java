@@ -12,7 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.szaboz.sonrisalibrary.R;
-import com.example.szaboz.sonrisalibrary.fragment.ManageBookFragment;
+import com.example.szaboz.sonrisalibrary.fragment.BorrowBookFragment;
 
 import static com.example.szaboz.sonrisalibrary.fragment.LoginFragment.*;
 
@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity
             if (savedInstanceState != null) {
                 return;
             }
-            ManageBookFragment manageBookFragment = ManageBookFragment.newInstance();
-            getFragmentManager().beginTransaction().add(R.id.fragment_container_main,manageBookFragment).commit();
+            BorrowBookFragment borrowBookFragment = BorrowBookFragment.newInstance();
+            getFragmentManager().beginTransaction().add(R.id.fragment_container_main,borrowBookFragment).commit();
         }
     }
 
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity
     public void onSignUpPressed() {}
 
     public void onLoginPressed() {
-        ManageBookFragment manageBookFragment = ManageBookFragment.newInstance();
+        BorrowBookFragment manageBookFragment = BorrowBookFragment.newInstance();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container_login, manageBookFragment);
         transaction.addToBackStack(manageBookFragment.toString());
