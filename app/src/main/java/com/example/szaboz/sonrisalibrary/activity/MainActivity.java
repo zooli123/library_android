@@ -101,10 +101,10 @@ public class MainActivity extends AppCompatActivity
     public void onSignUpPressed() {}
 
     public void onLoginPressed() {
-        BorrowBookFragment manageBookFragment = BorrowBookFragment.newInstance();
+        BorrowBookFragment borrowBookFragment = BorrowBookFragment.newInstance();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container_login, manageBookFragment);
-        transaction.addToBackStack(manageBookFragment.toString());
+        transaction.replace(R.id.fragment_container_login, borrowBookFragment);
+        transaction.addToBackStack(borrowBookFragment.toString());
         transaction.commit();
     }
 }
