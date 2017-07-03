@@ -16,12 +16,12 @@ import java.util.ArrayList;
  * Created by szaboz on 2017.06.30..
  */
 
-public class BookAdapter extends ArrayAdapter<Book> {
+public class BorrowBookAdapter extends ArrayAdapter<Book> {
     private Context context;
     private ArrayList<Book> books;
     private LayoutInflater inflater;
 
-    public BookAdapter(Context context, LayoutInflater inflater, ArrayList<Book> books) {
+    public BorrowBookAdapter(Context context, LayoutInflater inflater, ArrayList<Book> books) {
         super(context, 0, books);
         this.context = context;
         this.books = books;
@@ -32,21 +32,21 @@ public class BookAdapter extends ArrayAdapter<Book> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        BookAdapter.ViewHolder holder;
+        BorrowBookAdapter.ViewHolder holder;
         if (convertView == null) {
             convertView=inflater.inflate(R.layout.borrow_books_list, null, true);
-            TextView bookTitle = (TextView) convertView.findViewById(R.id.book_title);
-            TextView bookBorrower = (TextView) convertView.findViewById(R.id.book_borrower);
-            TextView bookBorrowDate = (TextView) convertView.findViewById(R.id.book_borrow_date);
+            TextView bookTitle = (TextView) convertView.findViewById(R.id.borrow_book_title);
+            TextView bookBorrower = (TextView) convertView.findViewById(R.id.borrow_book_borrower);
+            TextView bookBorrowDate = (TextView) convertView.findViewById(R.id.borrow_book_borrow_date);
 
-            holder = new BookAdapter.ViewHolder();
+            holder = new BorrowBookAdapter.ViewHolder();
             holder.bookTitle = bookTitle;
             holder.bookBorrower = bookBorrower;
             holder.bookBorrowDate = bookBorrowDate;
 
             convertView.setTag(holder);
         } else {
-            holder = (BookAdapter.ViewHolder) convertView.getTag();
+            holder = (BorrowBookAdapter.ViewHolder) convertView.getTag();
         }
 
         holder.bookTitle.setText(books.get(position).getTitle());

@@ -13,6 +13,7 @@ import android.view.MenuItem;
 
 import com.example.szaboz.sonrisalibrary.R;
 import com.example.szaboz.sonrisalibrary.fragment.BorrowBookFragment;
+import com.example.szaboz.sonrisalibrary.fragment.ManageBooksFragment;
 
 import static com.example.szaboz.sonrisalibrary.fragment.LoginFragment.*;
 
@@ -39,8 +40,8 @@ public class MainActivity extends AppCompatActivity
             if (savedInstanceState != null) {
                 return;
             }
-            BorrowBookFragment borrowBookFragment = BorrowBookFragment.newInstance();
-            getFragmentManager().beginTransaction().add(R.id.fragment_container_main,borrowBookFragment).commit();
+            ManageBooksFragment manageBooksFragment = ManageBooksFragment.newInstance();
+            getFragmentManager().beginTransaction().add(R.id.fragment_container_main, manageBooksFragment).commit();
         }
     }
 
@@ -83,9 +84,15 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_manage_books) {
-            // Handle the camera action
+            if (findViewById(R.id.fragment_container_main) != null) {
+                ManageBooksFragment manageBooksFragment = ManageBooksFragment.newInstance();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container_main,manageBooksFragment).commit();
+            }
         } else if (id == R.id.nav_borrow_books) {
-
+            if (findViewById(R.id.fragment_container_main) != null) {
+                BorrowBookFragment borrowBookFragment = BorrowBookFragment.newInstance();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container_main, borrowBookFragment).commit();
+            }
         } else if (id == R.id.nav_change_password) {
 
         } else if (id == R.id.nav_logout) {
