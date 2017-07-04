@@ -1,11 +1,13 @@
 package com.example.szaboz.sonrisalibrary.fragment;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.szaboz.sonrisalibrary.R;
@@ -13,6 +15,7 @@ import com.example.szaboz.sonrisalibrary.adapter.BorrowBookAdapter;
 import com.example.szaboz.sonrisalibrary.factory.DemoBooksFactory;
 
 public class BorrowBookFragment extends Fragment {
+
     public static BorrowBookFragment newInstance() {
         return new BorrowBookFragment();
     }
@@ -21,6 +24,7 @@ public class BorrowBookFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    public final static String EXTRA_MESSAGE = "com.example.ListViewTest.MESSAGE";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -54,10 +58,6 @@ public class BorrowBookFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
         getActivity().setTitle(R.string.borrow_books);
 
     }
@@ -72,6 +72,16 @@ public class BorrowBookFragment extends Fragment {
 
         BorrowBookAdapter bookAdapter = new BorrowBookAdapter(getActivity(), inflater, booksFactory.getDemoBooksData());
         listView.setAdapter(bookAdapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("Borrow this book?").show();
+            }
+        });
+
+
         return view;
     }
 

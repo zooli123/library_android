@@ -23,6 +23,9 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.appear, R.anim.disappear);
+
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -41,18 +44,22 @@ public class MainActivity extends AppCompatActivity
                 return;
             }
             ManageBooksFragment manageBooksFragment = ManageBooksFragment.newInstance();
-            getFragmentManager().beginTransaction().add(R.id.fragment_container_main, manageBooksFragment).commit();
+            FragmentTransaction ft = getFragmentManager().beginTransaction();
+            ft.setCustomAnimations(R.animator.appear, R.animator.disappear);
+            ft.add(R.id.fragment_container_main, manageBooksFragment).commit();
         }
     }
 
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        overridePendingTransition(R.anim.appear, R.anim.disappear);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
+
     }
 
     @Override
@@ -86,12 +93,16 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_manage_books) {
             if (findViewById(R.id.fragment_container_main) != null) {
                 ManageBooksFragment manageBooksFragment = ManageBooksFragment.newInstance();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container_main,manageBooksFragment).commit();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.setCustomAnimations(R.animator.appear, R.animator.disappear);
+                ft.replace(R.id.fragment_container_main,manageBooksFragment).commit();
             }
         } else if (id == R.id.nav_borrow_books) {
             if (findViewById(R.id.fragment_container_main) != null) {
                 BorrowBookFragment borrowBookFragment = BorrowBookFragment.newInstance();
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container_main, borrowBookFragment).commit();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.setCustomAnimations(R.animator.appear, R.animator.disappear);
+                ft.replace(R.id.fragment_container_main, borrowBookFragment).commit();
             }
         } else if (id == R.id.nav_change_password) {
 
@@ -110,6 +121,7 @@ public class MainActivity extends AppCompatActivity
     public void onLoginPressed() {
         BorrowBookFragment borrowBookFragment = BorrowBookFragment.newInstance();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.animator.appear, R.animator.disappear);
         transaction.replace(R.id.fragment_container_login, borrowBookFragment);
         transaction.addToBackStack(borrowBookFragment.toString());
         transaction.commit();
