@@ -1,5 +1,6 @@
 package com.example.szaboz.sonrisalibrary.activity;
 
+import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,7 +26,6 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Lo
             }
             LoginFragment loginFragment = LoginFragment.newInstance();
             FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.setCustomAnimations(R.animator.appear, R.animator.disappear);
             ft.add(R.id.fragment_container_login, loginFragment).commit();
         }
     }
@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Lo
     public void onSignUpPressed() {
         SignUpFragment signUpFragment = SignUpFragment.newInstance();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.animator.appear, R.animator.disappear, R.animator.appear, R.animator.disappear);
+        transaction.setCustomAnimations(R.animator.appear, R.animator.disappear, R.animator.pop_appear, R.animator.pop_disappear);
         transaction.replace(R.id.fragment_container_login, signUpFragment);
         transaction.addToBackStack(signUpFragment.toString());
         transaction.commit();
@@ -46,6 +46,5 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Lo
         Intent mainIntent = new Intent(this, MainActivity.class);
         startActivity(mainIntent);
     }
-
 
 }

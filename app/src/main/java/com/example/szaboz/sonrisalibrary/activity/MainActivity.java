@@ -1,6 +1,8 @@
 package com.example.szaboz.sonrisalibrary.activity;
 
+import android.app.AlertDialog;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,10 +17,9 @@ import com.example.szaboz.sonrisalibrary.R;
 import com.example.szaboz.sonrisalibrary.fragment.BorrowBookFragment;
 import com.example.szaboz.sonrisalibrary.fragment.ManageBooksFragment;
 
-import static com.example.szaboz.sonrisalibrary.fragment.LoginFragment.*;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, LoginPageListeners{
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,20 +46,17 @@ public class MainActivity extends AppCompatActivity
             }
             ManageBooksFragment manageBooksFragment = ManageBooksFragment.newInstance();
             FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ft.setCustomAnimations(R.animator.appear, R.animator.disappear);
+            ft.setCustomAnimations(R.animator.appear, R.animator.disappear, R.animator.pop_appear, R.animator.pop_disappear);
             ft.add(R.id.fragment_container_main, manageBooksFragment).commit();
         }
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        overridePendingTransition(R.anim.appear, R.anim.disappear);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to quit?")
+                .setPositiveButton("Yes",dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).show();
 
     }
 
@@ -94,14 +92,14 @@ public class MainActivity extends AppCompatActivity
             if (findViewById(R.id.fragment_container_main) != null) {
                 ManageBooksFragment manageBooksFragment = ManageBooksFragment.newInstance();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.setCustomAnimations(R.animator.appear, R.animator.disappear);
+                ft.setCustomAnimations(R.animator.appear, R.animator.disappear, R.animator.pop_appear, R.animator.pop_disappear);
                 ft.replace(R.id.fragment_container_main,manageBooksFragment).commit();
             }
         } else if (id == R.id.nav_borrow_books) {
             if (findViewById(R.id.fragment_container_main) != null) {
                 BorrowBookFragment borrowBookFragment = BorrowBookFragment.newInstance();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.setCustomAnimations(R.animator.appear, R.animator.disappear);
+                ft.setCustomAnimations(R.animator.pop_appear, R.animator.pop_disappear, R.animator.appear, R.animator.disappear);
                 ft.replace(R.id.fragment_container_main, borrowBookFragment).commit();
             }
         } else if (id == R.id.nav_change_password) {
@@ -115,15 +113,19 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public void onSignUpPressed() {}
+    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which){
+                case DialogInterface.BUTTON_POSITIVE:
+                    MainActivity.this.finish();
+                    break;
 
-    public void onLoginPressed() {
-        BorrowBookFragment borrowBookFragment = BorrowBookFragment.newInstance();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.animator.appear, R.animator.disappear);
-        transaction.replace(R.id.fragment_container_login, borrowBookFragment);
-        transaction.addToBackStack(borrowBookFragment.toString());
-        transaction.commit();
-    }
+                case DialogInterface.BUTTON_NEGATIVE:
+                    break;
+            }
+        }
+    };
+
+
 }
