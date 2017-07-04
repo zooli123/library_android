@@ -3,6 +3,7 @@ package com.example.szaboz.sonrisalibrary.activity;
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -56,10 +57,14 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure you want to quit?")
-                .setPositiveButton("Yes", confirmationBeforeQuitListener)
-                .setNegativeButton("No", confirmationBeforeQuitListener).show();
+        if (getFragmentManager().getBackStackEntryCount() > 0) {
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            } else {
+                super.onBackPressed();
+            }
+        }
     }
 
     @Override
@@ -97,7 +102,7 @@ public class MainActivity extends AppCompatActivity
                     ManageBooksFragment manageBooksFragment = ManageBooksFragment.newInstance();
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     ft.setCustomAnimations(R.animator.appear, R.animator.disappear, R.animator.pop_appear, R.animator.pop_disappear);
-                    ft.replace(R.id.fragment_container_main, manageBooksFragment, MANAGE_FRAGMENT).commit();
+                    ft.replace(R.id.fragment_container_main, manageBooksFragment, MANAGE_FRAGMENT).addToBackStack(null).commit();
                 }
             }
         } else if (id == R.id.nav_borrow_books) {
@@ -107,13 +112,16 @@ public class MainActivity extends AppCompatActivity
                     BorrowBookFragment borrowBookFragment = BorrowBookFragment.newInstance();
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     ft.setCustomAnimations(R.animator.pop_appear, R.animator.pop_disappear, R.animator.appear, R.animator.disappear);
-                    ft.replace(R.id.fragment_container_main, borrowBookFragment, BORROW_FRAGMENT).commit();
+                    ft.replace(R.id.fragment_container_main, borrowBookFragment, BORROW_FRAGMENT).addToBackStack(null).commit();
                 }
             }
         } else if (id == R.id.nav_change_password) {
 
         } else if (id == R.id.nav_logout) {
-            this.onBackPressed();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Are you sure you want to quit?")
+                    .setPositiveButton("Yes", confirmationBeforeQuitListener)
+                    .setNegativeButton("No", confirmationBeforeQuitListener).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -126,6 +134,8 @@ public class MainActivity extends AppCompatActivity
         public void onClick(DialogInterface dialog, int which) {
             switch (which){
                 case DialogInterface.BUTTON_POSITIVE:
+                    Intent mainIntent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(mainIntent);
                     MainActivity.this.finish();
                     break;
 
