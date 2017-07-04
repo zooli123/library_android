@@ -40,6 +40,6 @@ public class Book {
     public String getBorrower(){return borrower;}
 
     public String toString(){
-        return title + " " + borrower != null + borrower ? " " : "" + getBorrowDate();
+        return title + " " + borrower != null ? borrower + " " : "" + getBorrowDate();
     }
 }

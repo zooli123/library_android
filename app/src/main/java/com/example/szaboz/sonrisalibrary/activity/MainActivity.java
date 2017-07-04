@@ -55,9 +55,8 @@ public class MainActivity extends AppCompatActivity
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Are you sure you want to quit?")
-                .setPositiveButton("Yes",dialogClickListener)
-                .setNegativeButton("No", dialogClickListener).show();
-
+                .setPositiveButton("Yes", confirmationBeforeQuitListener)
+                .setNegativeButton("No", confirmationBeforeQuitListener).show();
     }
 
     @Override
@@ -105,7 +104,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_change_password) {
 
         } else if (id == R.id.nav_logout) {
-
+            this.onBackPressed();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -113,7 +112,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+    DialogInterface.OnClickListener confirmationBeforeQuitListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             switch (which){
