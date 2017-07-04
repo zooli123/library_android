@@ -21,6 +21,9 @@ import com.example.szaboz.sonrisalibrary.fragment.ManageBooksFragment;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
+    public static final String MANAGE_FRAGMENT = "MANAGE_FRAGMENT";
+    public static final String BORROW_FRAGMENT = "BORROW_FRAGMENT";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +50,7 @@ public class MainActivity extends AppCompatActivity
             ManageBooksFragment manageBooksFragment = ManageBooksFragment.newInstance();
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             ft.setCustomAnimations(R.animator.appear, R.animator.disappear, R.animator.pop_appear, R.animator.pop_disappear);
-            ft.add(R.id.fragment_container_main, manageBooksFragment).commit();
+            ft.add(R.id.fragment_container_main, manageBooksFragment, MANAGE_FRAGMENT).commit();
         }
     }
 
@@ -89,17 +92,23 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_manage_books) {
             if (findViewById(R.id.fragment_container_main) != null) {
-                ManageBooksFragment manageBooksFragment = ManageBooksFragment.newInstance();
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.setCustomAnimations(R.animator.appear, R.animator.disappear, R.animator.pop_appear, R.animator.pop_disappear);
-                ft.replace(R.id.fragment_container_main,manageBooksFragment).commit();
+                ManageBooksFragment actual_fragment = (ManageBooksFragment) getFragmentManager().findFragmentByTag(MANAGE_FRAGMENT);
+                if (actual_fragment == null || !actual_fragment.isVisible()) {
+                    ManageBooksFragment manageBooksFragment = ManageBooksFragment.newInstance();
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.setCustomAnimations(R.animator.appear, R.animator.disappear, R.animator.pop_appear, R.animator.pop_disappear);
+                    ft.replace(R.id.fragment_container_main, manageBooksFragment, MANAGE_FRAGMENT).commit();
+                }
             }
         } else if (id == R.id.nav_borrow_books) {
             if (findViewById(R.id.fragment_container_main) != null) {
-                BorrowBookFragment borrowBookFragment = BorrowBookFragment.newInstance();
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.setCustomAnimations(R.animator.pop_appear, R.animator.pop_disappear, R.animator.appear, R.animator.disappear);
-                ft.replace(R.id.fragment_container_main, borrowBookFragment).commit();
+                BorrowBookFragment actual_fragment = (BorrowBookFragment) getFragmentManager().findFragmentByTag(BORROW_FRAGMENT);
+                if (actual_fragment == null || !actual_fragment.isVisible()) {
+                    BorrowBookFragment borrowBookFragment = BorrowBookFragment.newInstance();
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.setCustomAnimations(R.animator.pop_appear, R.animator.pop_disappear, R.animator.appear, R.animator.disappear);
+                    ft.replace(R.id.fragment_container_main, borrowBookFragment, BORROW_FRAGMENT).commit();
+                }
             }
         } else if (id == R.id.nav_change_password) {
 
