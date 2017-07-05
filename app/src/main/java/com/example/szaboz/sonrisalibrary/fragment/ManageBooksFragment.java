@@ -45,6 +45,12 @@ public class ManageBooksFragment extends Fragment {
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+        getActivity().setTitle(R.string.manage_books);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment

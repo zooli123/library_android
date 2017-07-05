@@ -59,7 +59,12 @@ public class BorrowBookFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().setTitle(R.string.borrow_books);
+    }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        getActivity().setTitle(R.string.borrow_books);
     }
 
     @Override

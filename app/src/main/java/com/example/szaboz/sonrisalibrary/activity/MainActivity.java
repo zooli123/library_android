@@ -1,6 +1,7 @@
 package com.example.szaboz.sonrisalibrary.activity;
 
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,9 +23,12 @@ import com.example.szaboz.sonrisalibrary.fragment.ManageBooksFragment;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
-    public static final String MANAGE_FRAGMENT = "MANAGE_FRAGMENT";
-    public static final String BORROW_FRAGMENT = "BORROW_FRAGMENT";
+    private static final String MANAGE_FRAGMENT = "MANAGE_FRAGMENT";
+    private static final String BORROW_FRAGMENT = "BORROW_FRAGMENT";
 
+    private enum fragments { //order matters
+        MANAGE, BORROW
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +66,11 @@ public class MainActivity extends AppCompatActivity
             if (drawer.isDrawerOpen(GravityCompat.START)) {
                 drawer.closeDrawer(GravityCompat.START);
             } else {
+                NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+                if(isFragmentActive(MANAGE_FRAGMENT))
+                    navigationView.getMenu().getItem(fragments.MANAGE.ordinal()).setChecked(true);
+                else if(isFragmentActive(BORROW_FRAGMENT))
+                    navigationView.getMenu().getItem(fragments.BORROW.ordinal()).setChecked(true);
                 super.onBackPressed();
             }
         }
@@ -97,8 +106,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_manage_books) {
             if (findViewById(R.id.fragment_container_main) != null) {
-                ManageBooksFragment actual_fragment = (ManageBooksFragment) getFragmentManager().findFragmentByTag(MANAGE_FRAGMENT);
-                if (actual_fragment == null || !actual_fragment.isVisible()) {
+                if (isFragmentActive(MANAGE_FRAGMENT)) {
                     ManageBooksFragment manageBooksFragment = ManageBooksFragment.newInstance();
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     ft.setCustomAnimations(R.animator.appear, R.animator.disappear, R.animator.pop_appear, R.animator.pop_disappear);
@@ -107,8 +115,7 @@ public class MainActivity extends AppCompatActivity
             }
         } else if (id == R.id.nav_borrow_books) {
             if (findViewById(R.id.fragment_container_main) != null) {
-                BorrowBookFragment actual_fragment = (BorrowBookFragment) getFragmentManager().findFragmentByTag(BORROW_FRAGMENT);
-                if (actual_fragment == null || !actual_fragment.isVisible()) {
+                if(isFragmentActive(BORROW_FRAGMENT)){
                     BorrowBookFragment borrowBookFragment = BorrowBookFragment.newInstance();
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     ft.setCustomAnimations(R.animator.pop_appear, R.animator.pop_disappear, R.animator.appear, R.animator.disappear);
@@ -127,6 +134,11 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private boolean isFragmentActive(String tagName) {
+        Fragment fragment = getFragmentManager().findFragmentByTag(tagName);
+        return (fragment == null || !fragment.isVisible());
     }
 
     DialogInterface.OnClickListener confirmationBeforeQuitListener = new DialogInterface.OnClickListener() {
