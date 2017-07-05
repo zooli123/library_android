@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Lo
     public void onSignUpPressed() {
         SignUpFragment signUpFragment = SignUpFragment.newInstance();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.animator.appear, R.animator.disappear, R.animator.pop_appear, R.animator.pop_disappear);
+        transaction.setCustomAnimations(R.animator.appear, R.animator.disappear);
         transaction.replace(R.id.fragment_container_login, signUpFragment);
         transaction.addToBackStack(signUpFragment.toString());
         transaction.commit();
