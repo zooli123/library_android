@@ -17,6 +17,7 @@ import android.view.MenuItem;
 
 import com.example.szaboz.sonrisalibrary.R;
 import com.example.szaboz.sonrisalibrary.fragment.BorrowBookFragment;
+import com.example.szaboz.sonrisalibrary.fragment.ChangePasswordFragment;
 import com.example.szaboz.sonrisalibrary.fragment.ManageBooksFragment;
 
 
@@ -25,9 +26,10 @@ public class MainActivity extends AppCompatActivity
 
     private static final String MANAGE_FRAGMENT = "MANAGE_FRAGMENT";
     private static final String BORROW_FRAGMENT = "BORROW_FRAGMENT";
+    private static final String CHANGE_PASSWORD_FRAGMENT = "CHANGE_PASSWORD_FRAGMENT";
 
     private enum fragments { //order matters
-        MANAGE, BORROW
+        MANAGE, BORROW, CHANGE
     };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +68,14 @@ public class MainActivity extends AppCompatActivity
             if (drawer.isDrawerOpen(GravityCompat.START)) {
                 drawer.closeDrawer(GravityCompat.START);
             } else {
+                super.onBackPressed();
                 NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
                 if(isFragmentActive(MANAGE_FRAGMENT))
                     navigationView.getMenu().getItem(fragments.MANAGE.ordinal()).setChecked(true);
                 else if(isFragmentActive(BORROW_FRAGMENT))
                     navigationView.getMenu().getItem(fragments.BORROW.ordinal()).setChecked(true);
-                super.onBackPressed();
+                else if(isFragmentActive(CHANGE_PASSWORD_FRAGMENT))
+                    navigationView.getMenu().getItem(fragments.CHANGE.ordinal()).setChecked(true);
             }
         }
     }
@@ -106,7 +110,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_manage_books) {
             if (findViewById(R.id.fragment_container_main) != null) {
-                if (isFragmentActive(MANAGE_FRAGMENT)) {
+                if (!isFragmentActive(MANAGE_FRAGMENT)) {
                     ManageBooksFragment manageBooksFragment = ManageBooksFragment.newInstance();
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     ft.setCustomAnimations(R.animator.appear, R.animator.disappear, R.animator.pop_appear, R.animator.pop_disappear);
@@ -115,7 +119,7 @@ public class MainActivity extends AppCompatActivity
             }
         } else if (id == R.id.nav_borrow_books) {
             if (findViewById(R.id.fragment_container_main) != null) {
-                if(isFragmentActive(BORROW_FRAGMENT)){
+                if(!isFragmentActive(BORROW_FRAGMENT)){
                     BorrowBookFragment borrowBookFragment = BorrowBookFragment.newInstance();
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     ft.setCustomAnimations(R.animator.pop_appear, R.animator.pop_disappear, R.animator.appear, R.animator.disappear);
@@ -123,6 +127,14 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         } else if (id == R.id.nav_change_password) {
+            if(findViewById(R.id.fragment_container_main) != null) {
+                if(!isFragmentActive(CHANGE_PASSWORD_FRAGMENT)) {
+                    ChangePasswordFragment changePasswordFragment = ChangePasswordFragment.newInstance();
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    ft.setCustomAnimations(R.animator.appear, R.animator.disappear, R.animator.pop_appear, R.animator.pop_disappear);
+                    ft.replace(R.id.fragment_container_main, changePasswordFragment, CHANGE_PASSWORD_FRAGMENT).addToBackStack(null).commit();
+                }
+            }
 
         } else if (id == R.id.nav_logout) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -138,7 +150,7 @@ public class MainActivity extends AppCompatActivity
 
     private boolean isFragmentActive(String tagName) {
         Fragment fragment = getFragmentManager().findFragmentByTag(tagName);
-        return (fragment == null || !fragment.isVisible());
+        return (fragment != null && fragment.isVisible());
     }
 
     DialogInterface.OnClickListener confirmationBeforeQuitListener = new DialogInterface.OnClickListener() {

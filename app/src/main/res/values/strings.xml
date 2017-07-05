@@ -21,4 +21,7 @@
     <string name="change_password">Change password</string>
     <string name="logout">Log out</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="old_password">Old password</string>
+    <string name="new_password">New password</string>
+    <string name="new_password_confirm">Confirm new password</string>
 </resources>

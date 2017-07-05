@@ -10,15 +10,15 @@
             android:id="@+id/nav_borrow_books"
             android:icon="@drawable/borrow_book"
             android:title="@string/borrow_books" />
+        <item
+            android:id="@+id/nav_change_password"
+            android:icon="@drawable/change_password"
+            android:title="@string/change_password" />
 
     </group>
 
-    <item android:title="@string/action_settings">
+    <item android:title="">
         <menu>
-            <item
-                android:id="@+id/nav_change_password"
-                android:icon="@drawable/change_password"
-                android:title="@string/change_password" />
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/logout"
