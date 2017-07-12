@@ -27,27 +27,28 @@ import static java.util.stream.Collectors.toCollection;
  * create an instance of this fragment.
  */
 public class ManageBooksFragment extends Fragment {
-    public static ManageBooksFragment newInstance() {
-        return new ManageBooksFragment();
-    }
-
-       private ListView listView;
+    public static ManageBooksFragment newInstance() {return new ManageBooksFragment();}
+    private ListView listView;
     private OnFragmentInteractionListener mListener;
 
     public ManageBooksFragment() {
-        // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle(R.string.manage_books);
+        getActivity().setTitle(generateTitle());
     }
 
     @Override
     public void onResume(){
         super.onResume();
-        getActivity().setTitle(R.string.manage_books);
+        getActivity().setTitle(generateTitle());
+    }
+
+    private String generateTitle() {
+        String username = getActivity().getIntent().getExtras().getString("username");
+        return username + " " + getContext().getString(R.string.manage_books);
     }
 
     @Override
