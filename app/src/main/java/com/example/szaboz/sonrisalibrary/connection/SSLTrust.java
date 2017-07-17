@@ -1,6 +1,7 @@
 package com.example.szaboz.sonrisalibrary.connection;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.example.szaboz.sonrisalibrary.R;
 
@@ -16,18 +17,11 @@ import okhttp3.OkHttpClient;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManagerFactory;
 
-/**
- * Created by szaboz on 2017.07.12..
- */
-
 public class SSLTrust {
-    public static OkHttpClient trustcert(Context context){
+    public static OkHttpClient generateClient(Context context){
         OkHttpClient okHttpClient = new OkHttpClient();
         try {
-            KeyStore ksTrust = KeyStore.getInstance("BKS");
-            InputStream instream = context.getResources().openRawResource(R.raw.mykeystore);
-            ksTrust.load(instream, "pwdpwd".toCharArray());
-            // TrustManager decides which certificate authorities to use.
+            KeyStore ksTrust = generateKeyStore(context);
             TrustManagerFactory tmf = TrustManagerFactory
                     .getInstance(TrustManagerFactory.getDefaultAlgorithm());
             tmf.init(ksTrust);
@@ -38,5 +32,14 @@ public class SSLTrust {
             e.printStackTrace();
         }
         return okHttpClient;
+    }
+
+    @NonNull
+    private static KeyStore generateKeyStore(Context context) throws KeyStoreException,
+            IOException, NoSuchAlgorithmException, CertificateException {
+        KeyStore ksTrust = KeyStore.getInstance("BKS");
+        InputStream instream = context.getResources().openRawResource(R.raw.kstore);
+        ksTrust.load(instream, "pwdpwd".toCharArray());
+        return ksTrust;
     }
 }
